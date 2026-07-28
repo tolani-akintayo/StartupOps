@@ -8,7 +8,7 @@ investigate, and Data has a real dataset instead of a static CSV.
 
 ```bash
 npm install # no external deps currently, but keeps the workflow consistent
-TARGET_URL=http://localhost:3000 node generator.js
+TARGET_URL=http://localhost:4000 node generator.js
 ```
 
 ## Run on the EC2 host (recommended: systemd, not a foreground terminal)
@@ -22,7 +22,7 @@ After=network.target docker.service
 
 [Service]
 Type=simple
-Environment=TARGET_URL=http://localhost:3000
+Environment=TARGET_URL=http://localhost:4000
 WorkingDirectory=/opt/capstone/traffic-generator
 ExecStart=/usr/bin/node generator.js
 Restart=always
