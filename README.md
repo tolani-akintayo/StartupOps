@@ -2,7 +2,7 @@
 
 A lightweight startup operations platform.
 
-# Cross-Functional Capstone — Technical Scaffold
+# Cross-Functional Capstone: Technical Scaffold
 
 The shared system that DevOps, Cybersecurity, and Data Analysis students
 deploy, secure, monitor, and analyze together. See `docs/6-week-sprint-plan.md`
@@ -23,8 +23,8 @@ for the project structure and weekly cadence.
                        ┌───────────────────────────┐
                        │       EC2 instance        │
                        │                           │
-  traffic-generator ──▶  Docker: startup-capstone-  
-  (systemd, continuous)│  api  ── writes logs to ──┼──▶ /var/log/app/*.log
+  traffic-generator ──▶  Docker: startup-capstone-│  
+  (systemd, continuous)│  api  ── writes logs to ────▶ /var/log/app/*.log
                        │                           │             
                        │  CloudWatch Agent  ◀───────────────────┘
                        └──────────────┬────────────┘
@@ -64,5 +64,5 @@ terraform init && terraform apply -var="ec2_instance_id=..." -var="alarm_email=.
 `app/README.md` documents five intentionally planted issues in the API
 (hardcoded backdoor credential, no login rate limiting, an IDOR, an exposed
 admin endpoint, and an outdated dependency). DevOps should deploy the app
-as-is. Fixing these is Security's job in weeks 3–4 of the sprint plan — that's
+as-is. Fixing these is Security's job in weeks 3-4 of the sprint plan, that's
 the point of the exercise.
