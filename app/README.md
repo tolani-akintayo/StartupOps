@@ -12,6 +12,9 @@ npm install
 npm start
 ```
 
+Logs land in `./logs` (app/access/auth) no extra setup needed. See
+"Logging" below if you need to point them elsewhere.
+
 ## Run via Docker
 
 ```bash
@@ -24,6 +27,28 @@ docker run -p 3000:3000 \
 
 The `-v` bind mount is what lets the CloudWatch agent on the host read the app's
 log files. Without it, logs stay inside the container and never reach CloudWatch.
+
+## Logging
+
+Log location is intentionally different by context, and `LOG_DIR` should **not**
+be set in `.env` leave it unset and let each context use its own default:
+
+| Context | Where logs go | Set by |
+|---|---|---|
+| Local (`npm start`) | `./logs` (inside the `app/` folder) | `logger.js` default |
+| Docker container | `/usr/src/app/logs` | `Dockerfile`'s `ENV LOG_DIR` |
+
+If `.env` sets `LOG_DIR` explicitly, it overrides both of the above — including
+inside Docker via `--env-file`, which would silently break the bind mount (logs
+would write to whatever path you set, not to `/usr/src/app/logs`, and never
+reach the host or CloudWatch). Leave it unset unless you have a specific reason.
+
+### Troubleshooting: `EACCES: permission denied, mkdir '/var/log/app'`
+
+This means `.env` has `LOG_DIR=/var/log/app` (an old copy, or manually added) and
+you're running `npm start` directly on your machine rather than in Docker. Fix:
+remove the `LOG_DIR` line from `.env` (or just re-copy from the current
+`.env.example`, which no longer sets it) and restart.
 
 ## Endpoints
 
