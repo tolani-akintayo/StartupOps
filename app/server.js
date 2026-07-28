@@ -4,14 +4,6 @@ const express = require('express');
 const { appLogger } = require('./src/logger');
 const requestLogger = require('./src/middleware/requestLogger');
 
-app.get('/', (req, res) => {
-  res.json({
-    service: 'startup-capstone-api',
-    status: 'running',
-    endpoints: ['/health', '/api/products', '/api/auth/login', '/api/orders', '/api/users/:id', '/api/admin/stats'],
-  });
-});
-
 const healthRoute = require('./src/routes/health');
 const authRoute = require('./src/routes/auth');
 const productsRoute = require('./src/routes/products');
@@ -24,6 +16,15 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(requestLogger);
+
+app.get('/', (req, res) => {
+  res.json({
+    service: 'startup-capstone-api',
+    status: 'running',
+    endpoints: ['/health', '/api/products', '/api/auth/login', '/api/orders', '/api/users/:id', '/api/admin/stats'],
+  });
+});
+
 
 app.use('/', healthRoute);
 app.use('/api/auth', authRoute);
