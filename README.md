@@ -2,7 +2,7 @@
 
 A lightweight startup operations platform.
 
-# Cross-Functional Capstone — Technical Scaffold
+# Cross-Functional Capstone: Technical Scaffold
 
 The shared system that DevOps, Cybersecurity, and Data Analysis students
 deploy, secure, monitor, and analyze together. See `docs/6-week-sprint-plan.md`
@@ -13,7 +13,7 @@ for the project structure and weekly cadence.
 Terraform is reserved for the advanced curriculum, so this project uses it in
 exactly one place: standing up the CloudWatch observability layer. Compute and
 networking (VPC, EC2, security group, IAM role) are provisioned by hand
-through the AWS Console — that's where the actual beginner learning
+through the AWS Console that's where the actual beginner learning
 objectives live, and Terraform would abstract away the thing students are
 supposed to be learning. See `infrastructure/README.md` for the full
 rationale and step-by-step split.
@@ -22,7 +22,7 @@ rationale and step-by-step split.
 
 | Folder                | Owner (primary)        | What it is |
 |------------------------|------------------------|------------|
-| `app/`                 | DevOps (deploys it)    | The Node.js API — the shared system all three tracks work against |
+| `app/`                 | DevOps (deploys it)    | The Node.js API; the shared system all three tracks work against |
 | `traffic-generator/`   | DevOps (runs it)       | Continuously simulates realistic usage, attacks, and errors |
 | `infrastructure/`      | DevOps (owns), Security (reviews) | Part A: manual console steps for EC2/VPC/SG/IAM. Part B: provided Terraform for CloudWatch logs/metrics/alarms/dashboard only |
 | `docs/`                | Instructors             | Sprint plan and project structure |
@@ -54,7 +54,7 @@ rationale and step-by-step split.
 ## Quickstart (for the DevOps track)
 
 ```bash
-# 0. Provision compute manually via AWS Console — VPC (default), security
+# 0. Provision compute manually via AWS Console; VPC (default), security
 #    group, IAM role, EC2 instance. Full click-by-click steps in
 #    infrastructure/README.md Part A. Note the instance ID when done.
 
@@ -68,7 +68,7 @@ docker run -d -p 3000:3000 -v /var/log/app:/usr/src/app/logs --env-file .env sta
 cd ../traffic-generator
 TARGET_URL=http://localhost:3000 node generator.js &
 
-# 3. Deploy CloudWatch observability — this is the one Terraform step in the
+# 3. Deploy CloudWatch observability; this is the one Terraform step in the
 #    whole project. Students run it, they don't need to author or edit it.
 #    See infrastructure/README.md Part B.
 cd ../infrastructure/terraform
@@ -80,5 +80,5 @@ terraform init && terraform apply -var="ec2_instance_id=<from step 0>" -var="ala
 `app/README.md` documents five intentionally planted issues in the API
 (hardcoded backdoor credential, no login rate limiting, an IDOR, an exposed
 admin endpoint, and an outdated dependency). DevOps should deploy the app
-as-is. Fixing these is Security's job in weeks 3–4 of the sprint plan — that's
+as-is. Fixing these is Security's job in weeks 3-4 of the sprint plan that's
 the point of the exercise.

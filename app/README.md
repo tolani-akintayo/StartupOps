@@ -1,7 +1,7 @@
 # startup-capstone-api
 
 Minimal Node.js/Express API standing in for a small startup's product. It exists to
-be deployed, secured, monitored, and analyzed — not to be extended. Keep changes
+be deployed, secured, monitored, and analyzed not to be extended. Keep changes
 to this app to a minimum so the three tracks are all working against a stable target.
 
 ## Run locally
@@ -48,21 +48,21 @@ log files. Without it, logs stay inside the container and never reach CloudWatch
 | carol    | Carol#2024       | user  |
 | admin    | S3cur3AdminPass! | admin |
 
-## Instructor notes — planted issues (do not share this section with students up front)
+## Instructor notes: planted issues (do not share this section with students up front)
 
 This app is deliberately imperfect so the Security track has real, discoverable
 findings instead of a hypothetical checklist. Each is realistic and common in
 production codebases, not contrived:
 
-1. **Hardcoded backdoor credential** — `admin` / `admin123` authenticates
+1. **Hardcoded backdoor credential** : `admin` / `admin123` authenticates
    successfully in `src/routes/auth.js`, bypassing the real password hash entirely.
-2. **No rate limiting on `/api/auth/login`** — brute-forceable; detectable via
+2. **No rate limiting on `/api/auth/login`** : brute-forceable; detectable via
    `auth.log` volume from a single source.
-3. **IDOR on `GET /api/users/:id`** — any authenticated user can read any other
+3. **IDOR on `GET /api/users/:id`** : any authenticated user can read any other
    user's profile.
-4. **Unauthenticated `/api/admin/stats`** — never had `requireAuth` wired up;
+4. **Unauthenticated `/api/admin/stats`** : never had `requireAuth` wired up;
    leaks aggregate business metrics to anyone who finds it.
-5. **Outdated dependency** — `lodash` is pinned to `4.17.15` in `package.json`
+5. **Outdated dependency** : `lodash` is pinned to `4.17.15` in `package.json`
    specifically so a Trivy/`npm audit` scan returns a real, known finding
    rather than a synthetic one.
 
