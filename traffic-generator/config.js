@@ -1,5 +1,5 @@
 module.exports = {
-  BASE_URL: process.env.TARGET_URL || 'http://localhost:3000',
+  BASE_URL: process.env.TARGET_URL || 'http://localhost:4000',
 
   // How often the generator "ticks" and decides how many requests to fire.
   TICK_INTERVAL_MS: 10_000,
