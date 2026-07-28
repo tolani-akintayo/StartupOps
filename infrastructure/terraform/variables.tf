@@ -17,7 +17,7 @@ variable "project_name" {
 }
 
 variable "ec2_instance_id" {
-  description = "Instance ID of the EC2 host running the app + traffic generator (provisioned separately by the DevOps track)"
+  description = "Instance ID of the EC2 host running the app + traffic generator. Provisioned manually via the AWS Console by the DevOps track — see infrastructure/README.md Part A. This Terraform does not create the instance, it only wires up observability against it."
   type        = string
 }
 

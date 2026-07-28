@@ -4,6 +4,14 @@
 **Shared system:** `startup-capstone-api` (see `app/README.md`)
 **Format:** Agile, 1-week sprints, six sprints total
 
+**A note on Terraform:** it's reserved for the advanced curriculum, so it
+appears in exactly one place in this project — standing up the CloudWatch
+observability layer in Week 2. Compute and networking (VPC, EC2, security
+group, IAM role) are provisioned by hand through the AWS Console instead,
+because that hands-on work is where the actual beginner learning objectives
+live. Students run the provided Terraform, they don't author or edit it. See
+`infrastructure/README.md` for the full split.
+
 ---
 
 ## Cadence (applies every week unless noted)
@@ -29,6 +37,8 @@ Cross-team dependencies get flagged at standup, not discovered at Friday demo.
   identified and documented what "suspicious" looks like in the auth logs.
 - **DevOps**'s Week 4 incident-response exercise should be scheduled so
   **Data** can analyze the resulting metrics afterward, not simultaneously.
+- The CloudWatch Terraform step needs an EC2 instance ID as input — sequence
+  Week 2 so the manual console provisioning happens first, Terraform second.
 
 ---
 
@@ -40,8 +50,10 @@ Cross-team dependencies get flagged at standup, not discovered at Friday demo.
   Security — that's meant to be discovered, not read). Set up shared repo
   access, communication channel, and AWS IAM users/roles.
 - **DevOps:** Get the app running locally in Docker. Draft the deployment plan
-  (EC2 sizing, security group, how the traffic generator will run). Request
-  AWS resources needed for Week 2.
+  (EC2 sizing, security group rules, IAM role/policies, how the traffic
+  generator will run) — this is a manual AWS Console plan, not a Terraform
+  plan; see `infrastructure/README.md` Part A. Request AWS access needed for
+  Week 2.
 - **Cybersecurity:** No system to test yet — instead, do a **paper threat
   model** of the architecture as described (what could go wrong in an API +
   EC2 + CloudWatch setup, in general terms). Get scanning tools (Trivy) ready.
@@ -59,14 +71,19 @@ cross-team asks (e.g., Security requesting specific log fields from DevOps).
 
 **Goal:** The system is live, traffic is flowing, and logs/metrics reach CloudWatch.
 
-- **DevOps:** Deploy the app to EC2 via Docker. Start the traffic generator
-  (systemd, per `traffic-generator/README.md`). Deploy the CloudWatch
-  Terraform (`infrastructure/terraform`) and confirm the agent is shipping
-  logs. Confirm the dashboard shows live data.
-- **Cybersecurity:** Harden the EC2 host — SSH key-only auth (or switch to SSM
-  Session Manager), disable root login, restrict the security group to
-  necessary ports, review the IAM role DevOps attached (`iam.tf`) for scope.
-  Run a first Trivy scan against the app's dependencies.
+- **DevOps:** Provision the VPC (default), security group, IAM role, and EC2
+  instance by hand through the AWS Console — full steps in
+  `infrastructure/README.md` Part A. Deploy the app to EC2 via Docker. Start
+  the traffic generator (systemd, per `traffic-generator/README.md`). Then,
+  and only then, run the provided CloudWatch Terraform
+  (`infrastructure/terraform` Part B) to stand up log groups, alarms, and the
+  dashboard — treat this as running a provided tool, not authoring IaC;
+  confirm the agent is shipping logs and the dashboard shows live data.
+- **Cybersecurity:** Harden the EC2 host — SSH key-only auth (or confirm SSM
+  Session Manager is in use instead), disable root login, restrict the
+  security group to necessary ports. Review the IAM role and security group
+  DevOps created through the console for scope (least privilege, no `0.0.0.0/0`
+  on SSH). Run a first Trivy scan against the app's dependencies.
 - **Data Analysis:** Confirm you can query the new log groups via CloudWatch
   Logs Insights. Do a first exploratory pass — request volume by hour, status
   code distribution. Don't build final dashboards yet; you're validating the
@@ -81,10 +98,12 @@ CloudWatch dashboard showing real metrics.
 
 **Goal:** Security starts finding real issues; Data ships a first dashboard draft.
 
-- **DevOps:** Expand alarms/dashboard as other tracks request specific
-  metrics. Set up log rotation/retention if not already handled. Start a
-  basic CI pipeline (GitHub Actions) for rebuild-and-redeploy on push.
-  Write a one-page ops runbook (how to restart the app, check logs, roll back).
+- **DevOps:** Add any extra alarms/dashboard widgets other tracks request
+  directly through the CloudWatch console — don't edit the provided Terraform
+  files; that keeps the one IaC step in this project scoped to what's already
+  there. Set up log rotation/retention if not already handled. Start a basic
+  CI pipeline (GitHub Actions) for rebuild-and-redeploy on push. Write a
+  one-page ops runbook (how to restart the app, check logs, roll back).
 - **Cybersecurity:** Using auth.log and access.log (via the dashboard/Logs
   Insights, not raw file access), identify real findings — this is where the
   planted vulnerabilities should surface if the team is thorough. Document
@@ -159,8 +178,10 @@ security report, dashboards/recommendations) submitted as the project record.
 
 ## What "done" looks like per track
 
-- **DevOps:** App deployed and stable, traffic generator running continuously,
-  CI pipeline functioning, CloudWatch dashboard/alarms live, runbook written.
+- **DevOps:** Compute infrastructure (VPC/EC2/SG/IAM) provisioned via console,
+  app deployed and stable, traffic generator running continuously, CI pipeline
+  functioning, CloudWatch dashboard/alarms live (via the provided Terraform),
+  runbook written.
 - **Cybersecurity:** Documented findings with evidence (log excerpts, scan
   output), at least two fixes implemented and verified, written assessment.
 - **Data Analysis:** Working dashboard(s) built on real CloudWatch data,
