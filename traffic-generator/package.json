@@ -1,0 +1,12 @@
+{
+  "name": "capstone-traffic-generator",
+  "version": "1.0.0",
+  "description": "Continuously simulates realistic customer traffic against the startup-capstone-api for the DevOps/Security/Data capstone.",
+  "main": "generator.js",
+  "scripts": {
+    "start": "node generator.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "startup-capstone-api",
+  "version": "1.0.0",
+  "description": "Lightweight Node.js API simulating a startup product — used as the shared deployment target for the DevOps/Security/Data capstone.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "pino": "^9.2.0",
+    "pino-http": "^10.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "lodash": "4.17.15",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
