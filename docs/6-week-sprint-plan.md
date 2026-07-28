@@ -147,7 +147,7 @@ the correlated security/traffic view.
 - **Cybersecurity:** Finalize the written report findings, fixes, residual
   risk, recommendations for what a "next sprint" of hardening would cover.
 - **Data Analysis:** Finalize dashboards and write the business recommendation
-  summary (2–3 concrete, data-backed suggestions).
+  summary (2-3 concrete, data-backed suggestions).
 - **All teams:** Build one shared "State of the System" deck combining all
   three perspectives this is what gets presented in Week 6, not three
   separate decks stapled together.

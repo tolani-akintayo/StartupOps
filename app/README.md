@@ -68,4 +68,4 @@ production codebases, not contrived:
 
 Expected flow: Security discovers these through log review and dependency
 scanning (not by reading this file), documents them, and proposes/implements
-fixes in weeks 3–4 of the sprint plan.
+fixes in weeks 3-4 of the sprint plan.
