@@ -24,7 +24,7 @@ variable "ec2_instance_id" {
 variable "log_retention_days" {
   description = "Retention period for all capstone CloudWatch log groups"
   type        = number
-  default     = 14
+  default     = 60
 }
 
 variable "alarm_email" {
