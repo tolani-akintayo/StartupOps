@@ -56,9 +56,25 @@ instance profile you don't need a separate step for that.)
 Once it's running, install Docker and deploy the app per `app/README.md`,
 and set up the traffic generator per `traffic-generator/README.md`.
 
+> **Amazon Linux 2023 users:** AL2023 doesn't ship `rsyslog` by default (older
+> AL2 did) — without it, `/var/log/secure` never gets created and SSH/sudo
+> auth events only exist in `journald`, invisible to the CloudWatch agent's
+> log-file input. Install it once, right after launch:
+>
+> ```bash
+> sudo dnf install -y rsyslog
+> sudo systemctl enable --now rsyslog
+> ```
+
 > **Using Ubuntu instead of Amazon Linux?** Change the SSH log path in
 > `cloudwatch-agent-config.json` from `/var/log/secure` to `/var/log/auth.log`,
 > and swap `yum` for `apt-get` in the agent install step below.
+>
+> **Using Ubuntu instead of Amazon Linux?** Change the SSH log path in
+> `cloudwatch-agent-config.json` from `/var/log/secure` to `/var/log/auth.log`,
+> and swap `dnf`/`yum` for `apt-get` in the agent install step below. Ubuntu
+> ships rsyslog by default, so `/var/log/auth.log` should already exist —
+> no separate install step needed there.
 
 ---
 
