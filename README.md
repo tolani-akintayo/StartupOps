@@ -1,7 +1,3 @@
-# StartupOps
-
-A lightweight startup operations platform.
-
 # Cross-Functional Capstone: Technical Scaffold
 
 The shared system that DevOps, Cybersecurity, and Data Analysis students
